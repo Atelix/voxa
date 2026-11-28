@@ -26,6 +26,13 @@ export default defineConfig({
 		},
 		extensions: [".js", ".json", ".jsx", ".mjs", ".ts", ".tsx", ".vue"],
 	},
+	optimizeDeps: {
+		// vite-plugin-vuetify adds a vuetify/components/* import for each component a file uses, which Vite's dependency
+		// scan cannot see. Pre-bundling Vuetify would then re-bundle the dependencies whenever a page first uses another
+		// component, and the page that is loading gets "504 (Outdated Optimize Dep)". Vuetify ships ES modules, so it is
+		// served as is (as the Vuetify docs recommend with auto-import).
+		exclude: ["vuetify"],
+	},
 	server: {
 		port: 3000,
 	},
